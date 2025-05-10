@@ -1,7 +1,22 @@
-import { expect, test } from 'vitest';
+import { expect, test, beforeAll, afterAll } from 'vitest';
+import request from 'supertest';
+import { app } from '../routes/app';
 
-test('o usuário consegue criar uma nova transação', () => {
-  const responseStatusCode = 201;
+beforeAll(async () => {
+  await app.ready();
+});
 
-  expect(responseStatusCode).toEqual(201);
+afterAll(async () => {
+  await app.close();
+});
+
+test('user can create a new transaction', async () => {
+  const response = await request(app.server)
+    .post('/transactions')
+    .send({
+      title: 'New Transaction',
+      amount: 49871,
+      typePayment: 'debit',
+    })
+    .expect(201);
 });
