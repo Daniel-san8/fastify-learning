@@ -1,3 +1,3 @@
-import { configKnex } from './src/database';
+import { configKnex } from './src/routes/database';
 
 export default configKnex;
